@@ -18,6 +18,8 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [message, setMessage] = useState("");
   const [completed, setCompleted] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     // Deliberately do not read any input values or construct a request.
