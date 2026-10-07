@@ -14,7 +14,7 @@ describe("Educational demo credential safeguards", () => {
   it("does not transmit credentials when the simulation is submitted", () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
     renderDemo();
-    fireEvent.click(screen.getByRole("button", { name: "Sign in", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: /^Sign in$/ }));
     expect(fetchSpy).not.toHaveBeenCalled();
     expect(screen.getByRole("status")).toBeInTheDocument();
   });
@@ -22,7 +22,7 @@ describe("Educational demo credential safeguards", () => {
   it("does not store credentials when the simulation is submitted", () => {
     const storageSpy = vi.spyOn(Storage.prototype, "setItem");
     renderDemo();
-    fireEvent.click(screen.getByRole("button", { name: "Sign in", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: /^Sign in$/ }));
     expect(storageSpy).not.toHaveBeenCalled();
   });
 
@@ -32,7 +32,7 @@ describe("Educational demo credential safeguards", () => {
     const warnSpy = vi.spyOn(console, "warn");
     const errorSpy = vi.spyOn(console, "error");
     renderDemo();
-    fireEvent.click(screen.getByRole("button", { name: "Sign in", exact: true }));
+    fireEvent.click(screen.getByRole("button", { name: /^Sign in$/ }));
     expect(logSpy).not.toHaveBeenCalled();
     expect(infoSpy).not.toHaveBeenCalled();
     expect(warnSpy).not.toHaveBeenCalled();
