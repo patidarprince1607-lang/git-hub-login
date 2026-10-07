@@ -40,4 +40,15 @@ describe("Educational demo credential safeguards", () => {
     expect(warnSpy).not.toHaveBeenCalled();
     expect(errorSpy).not.toHaveBeenCalled();
   });
+
+  it("clears typed credentials from the form after submission", () => {
+    renderDemo();
+    const usernameInput = screen.getByLabelText(/demo username/i);
+    const passwordInput = screen.getByLabelText(/demo password/i);
+    fireEvent.change(usernameInput, { target: { value: "attacker_test" } });
+    fireEvent.change(passwordInput, { target: { value: "hunter2" } });
+    fireEvent.click(screen.getByRole("button", { name: /^Sign in$/ }));
+    expect(usernameInput).toHaveValue("");
+    expect(passwordInput).toHaveValue("");
+  });
 });
