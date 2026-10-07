@@ -14,6 +14,8 @@ describe("Educational demo credential safeguards", () => {
   it("does not transmit credentials when the simulation is submitted", () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
     renderDemo();
+    fireEvent.change(screen.getByLabelText(/demo username/i), { target: { value: "attacker_test" } });
+    fireEvent.change(screen.getByLabelText(/demo password/i), { target: { value: "hunter2" } });
     fireEvent.click(screen.getByRole("button", { name: /^Sign in$/ }));
     expect(fetchSpy).not.toHaveBeenCalled();
     expect(screen.getByRole("status")).toBeInTheDocument();
@@ -37,5 +39,16 @@ describe("Educational demo credential safeguards", () => {
     expect(infoSpy).not.toHaveBeenCalled();
     expect(warnSpy).not.toHaveBeenCalled();
     expect(errorSpy).not.toHaveBeenCalled();
+  });
+
+  it("clears typed credentials from the form after submission", () => {
+    renderDemo();
+    const usernameInput = screen.getByLabelText(/demo username/i);
+    const passwordInput = screen.getByLabelText(/demo password/i);
+    fireEvent.change(usernameInput, { target: { value: "attacker_test" } });
+    fireEvent.change(passwordInput, { target: { value: "hunter2" } });
+    fireEvent.click(screen.getByRole("button", { name: /^Sign in$/ }));
+    expect(usernameInput).toHaveValue("");
+    expect(passwordInput).toHaveValue("");
   });
 });

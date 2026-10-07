@@ -18,10 +18,13 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [message, setMessage] = useState("");
   const [completed, setCompleted] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     // Deliberately do not read any input values or construct a request.
-    event.currentTarget.reset();
+    setUsername("");
+    setPassword("");
     setCompleted(true);
     setMessage("No credentials were captured, stored, or transmitted. Always verify the actual domain before signing in.");
   }
@@ -43,10 +46,10 @@ function Index() {
         <div className="login-box">
           <form onSubmit={submit} autoComplete="off">
             <label htmlFor="username">Demo username</label>
-            <input id="username" type="text" defaultValue="demo_user" readOnly aria-describedby="demo-note" />
+            <input id="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter a fake username" aria-describedby="demo-note" />
             <div className="password-row"><label htmlFor="password">Demo password</label><Button type="button" variant="link" className="inline-link" onClick={() => explain("Password recovery is disabled in this educational demonstration. No real authentication is performed.")}>Forgot password?</Button></div>
-            <input id="password" type="password" defaultValue="DEMO_PASSWORD_123" readOnly autoComplete="new-password" aria-describedby="demo-note" />
-            <p id="demo-note" className="demo-note"><LockKeyhole size={12} aria-hidden="true" /> Fixed, fictional credentials for your safety.</p>
+            <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter a fake password" autoComplete="new-password" aria-describedby="demo-note" />
+            <p id="demo-note" className="demo-note"><LockKeyhole size={12} aria-hidden="true" /> Use fake credentials only — nothing you type is sent or stored.</p>
             <Button type="submit" className="signin w-full">Sign in</Button>
           </form>
           <div className="divider"><span>or</span></div>
