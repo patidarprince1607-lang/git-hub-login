@@ -14,6 +14,8 @@ describe("Educational demo credential safeguards", () => {
   it("does not transmit credentials when the simulation is submitted", () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
     renderDemo();
+    fireEvent.change(screen.getByLabelText(/demo username/i), { target: { value: "attacker_test" } });
+    fireEvent.change(screen.getByLabelText(/demo password/i), { target: { value: "hunter2" } });
     fireEvent.click(screen.getByRole("button", { name: /^Sign in$/ }));
     expect(fetchSpy).not.toHaveBeenCalled();
     expect(screen.getByRole("status")).toBeInTheDocument();
