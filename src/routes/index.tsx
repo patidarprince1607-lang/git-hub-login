@@ -23,7 +23,8 @@ function Index() {
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     // Deliberately do not read any input values or construct a request.
-    event.currentTarget.reset();
+    setUsername("");
+    setPassword("");
     setCompleted(true);
     setMessage("No credentials were captured, stored, or transmitted. Always verify the actual domain before signing in.");
   }
